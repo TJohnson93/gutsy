@@ -8,7 +8,9 @@ Gutsy is a PHP class that creates an easy to use DRY connection to a MySQL, MS S
 
 ### Configuring Gutsy
 To configure Gutsy for your database connection edit the `config.php` file change the definitions to your database information.		
-**NOTE** - *MS SQL is currently untested!*
+**NOTES** 
+	- *MS SQL is currently untested!*
+	- *SQLite database name is the name of the SQLite filename.*
 
 	<?php
 		define('DB_HOST', 'localhost');			
