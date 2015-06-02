@@ -1,6 +1,10 @@
 # Gutsy
 Gutsy is a PHP class that creates an easy to use DRY connection to a MySQL, MS SQL or SQLite database using PHP's secure PDO. Not only does it make the connection but it also allows easier creation of you SQL queries. You wont need to remember the PDO specific parameters or how to work your DSN, Gutsy does this for you. Gutsy also has a degugging function (which can be toggled in your config) that allows you to see any PHP errors whilst active and is hidden (for security reasons) in production mode. Gutsy has a function that creates a folder that contains a MySQL log so you have a record of any errors that may occur.
 
+**NOTES** 
+
+- MS SQL is currently untested!
+- SQLite database name is the name of the SQLite filename.
 
 ## How to Use
 
@@ -8,11 +12,6 @@ Gutsy is a PHP class that creates an easy to use DRY connection to a MySQL, MS S
 
 ### Configuring Gutsy
 To configure Gutsy for your database connection edit the `config.php` file change the definitions to your database information.		
-**NOTES** 
-
-- *MS SQL is currently untested!*
-
-- *SQLite database name is the name of the SQLite filename.*
 
 	<?php
 		define('DB_HOST', 'localhost');			
@@ -84,7 +83,7 @@ To return a single row use the `single` function.
 		
 	<?php
 		$gutsy->single();
-	?>
+	?>
 
 To return an array of results use the `resultset` function.
 
