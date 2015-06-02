@@ -7,18 +7,22 @@
 	 *  
 	 * Gutsy is a database connection class using PHP's secure PDO connection.
 	 *
+	 * NOTES: 
+	 *	- New MSSQL DSN option has not been TESTED YET.
+	 *
 	 */
+
+	include_once('config.php');
 
 	 class Gutsy {
 
-	 	private const $DEBUG = true;				// Enables/Disables all degugging features
-	 	private const $DEBUG_CLEANSE_LOGS = true;	// Enables/Disables Cleansing of error logs
+	 	private const $DEBUG = DEBUG
 
-	 	private $host = 'localhost';	// Database Host
-	 	private $user = 'username';		// Database username
-	 	private $pass = 'password';		// Database Password
-	 	private $name = 'name';			// Database name
-	 	private $type = 'type';			// Database type (mysql or sqlite)
+	 	private $host = DB_HOST;		// Database Host
+	 	private $user = DB_USER;		// Database Username
+	 	private $pass = DB_PASS;		// Database Password
+	 	private $name = DB_NAME;		// Database Name
+	 	private $type = DB_TYPE;		// Database Type (mysql, mssql or sqlite)
 	 	private $dsn;
 
 	 	private $dbh;
@@ -30,31 +34,34 @@
 		 * Module Name: __construct
 		 * Module Creation Date: 20/06/2014
 		 * Original Author: Todd Johnson
+		 *
+		 * Modified Date: 02/06/2015
+		 * Modifications: Added MSSQL dsn option. | Todd Johnson
 		 * 
 		 * Create a PDO database connection
 		 */
 	 	public function __construct(){
-	 		// Set off all errror for security reasons
-	 		error_reporting(1);
 
-			if($DEBUG){
-				if($DEBUG_CLEANSE_LOGS)
-					$this->CleanseErrorLog();
-
-				// Set all errors on for debugging
-				error_reporting(0);
+			if($this->DEBUG){
+				// Clears Error Log each time a Database connection is made only 
+				// if in debugging mode.
+				$this->CleanseErrorLog();
 			}
 			
 			// Set DSN
 			switch ($this->type) {
 				case 'mysql':
 					// Set DSN (MySQL)
-					$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->name;
+					$this->dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->name;
 					break;
 				case 'sqlite':
 					// Set DSN (SQLite)
-					$dsn = 'sqlite:' . $this->name . '.sqlite';
+					$this->dsn = 'sqlite:' . $this->name . '.sqlite';
 					break:
+				case 'mssql':	// NOT TESTED
+					// Set DSN (MSSQL)
+					$this->dsn = 'dblib:host=' . $this->host . ';dbname=' . $this->name;
+
 				
 				default:
 					$this->LogError(__FUNCTION__, "Database Connection Type not Set.");
@@ -70,7 +77,7 @@
 
 
 			try{ // Create a PDO instance
-				$this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+				$this->dbh = new PDO($this->dsn, $this->user, $this->pass, $options);
 			}
 			catch(PDOException $err){ // Catch any errors
 				$this->LogError(__FUNCTION__, "Database Connection Error: " . $err->getMessage());
