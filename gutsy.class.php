@@ -16,7 +16,7 @@
 
 	 class Gutsy {
 
-	 	private const $DEBUG = DEBUG
+	 	private $DEBUG = DEBUG;
 
 	 	private $host = DB_HOST;		// Database Host
 	 	private $user = DB_USER;		// Database Username
@@ -57,11 +57,11 @@
 				case 'sqlite':
 					// Set DSN (SQLite)
 					$this->dsn = 'sqlite:' . $this->name . '.sqlite';
-					break:
+					break;
 				case 'mssql':	// NOT TESTED
 					// Set DSN (MSSQL)
 					$this->dsn = 'dblib:host=' . $this->host . ';dbname=' . $this->name;
-
+					break;
 				
 				default:
 					$this->LogError(__FUNCTION__, "Database Connection Type not Set.");
