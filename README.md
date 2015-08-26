@@ -6,6 +6,10 @@ Gutsy is a PHP class that creates an easy to use DRY connection to a MySQL, MS S
 - MS SQL is currently untested!
 - SQLite database name is the name of the SQLite filename.
 
+**COMING SOON**
+- MongoDB Support
+- PostgreSQL Support
+
 ## How to Use
 
 -------------
